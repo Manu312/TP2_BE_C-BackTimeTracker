@@ -3,8 +3,8 @@ const mysql = require('mysql');
 // Configuración de la conexión a la base de datos
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: '', //Completar
-  password: '',//Completar
+  user: 'root', //Completar
+  password: 'M@nukpo14',//Completar
   database: 'apptimetracker'
 });
 
@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) {
     console.error('Error al conectar a la base de datos:', err);
-    return;
+    process.exit(1);
   }
   console.log('Conexión a la base de datos establecida.');
 });
