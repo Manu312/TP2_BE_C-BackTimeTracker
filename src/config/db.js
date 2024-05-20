@@ -3,8 +3,8 @@ const mysql = require('mysql');
 // Configuración de la conexión a la base de datos
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root', //Completar
-  password: 'M@nukpo14',//Completar
+  user: '', //Completar
+  password: '',//Completar
   database: 'apptimetracker'
 });
 
