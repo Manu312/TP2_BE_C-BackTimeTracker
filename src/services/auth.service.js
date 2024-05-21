@@ -7,7 +7,7 @@ class AuthService{
         try{
             const hashedPassword = await bcrypt.hash(userData.password, 10);
             const user = {...userData, password: hashedPassword};
-            return await User.createUser(user);
+            return await User.create({...user});
         }catch(err){
             console.error('auth.service ~~ Error al registrar el usuario:', err);
             throw err;
@@ -16,12 +16,11 @@ class AuthService{
     static async login(username, password){
         try{
             console.log('auth.service ~~ username:',username,'password:',password)
-            const user = await User.getUserByUsername(username);
+            const user = await User.findOne({where: {username: username}});
             if(!user){
                 throw new Error('Usuario no encontrado');
             }
             const isValidPassword = await bcrypt.compare(password, user.password);
-            console.log('auth.service ~~ isValidPassword:',isValidPassword);
             if(!isValidPassword){
                 throw new Error('Contraseña incorrecta');
             }
@@ -34,7 +33,7 @@ class AuthService{
     }
     static async forgotPasswordRequest(email){
         try{
-            const user = await User.getUserByEmail(email);
+            const user = await User.findOne({where: {email:email}});
             if(!user){
                 throw new Error('Usuario no encontrado');
             }

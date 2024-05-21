@@ -1,20 +1,22 @@
-const mysql = require('mysql');
+const { Sequelize } = require('sequelize');
 
-// Configuración de la conexión a la base de datos
-const connection = mysql.createConnection({
+const user = 'root'|| process.env.DB_USER;
+const password = 'root'|| process.env.DB_PASSWORD;
+
+const sequelize = new Sequelize('apptimetracker', `${user}`, `${password}`, {
   host: 'localhost',
-  user: '', //Completar
-  password: '',//Completar
-  database: 'apptimetracker'
+  dialect: 'mysql',
 });
 
-// Conectar a la base de datos
-connection.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos:', err);
-    process.exit(1);
-  }
-  console.log('Conexión a la base de datos establecida.');
-});
+async()=>{
+    try{
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+        await sequelize.sync({ force: false });
+        console.log('Database synchronized.');
+    }catch(error){
+        console.error('Unable to connect to the database:', error);
+    }
+}
 
-module.exports = connection;
+module.exports = sequelize;
