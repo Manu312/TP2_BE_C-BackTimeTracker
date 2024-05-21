@@ -26,7 +26,7 @@ class AuthController {
   static async forgotPassword(req, res) {
     try {
       const { email } = req.body;
-      await AuthService.forgotPassword(email);
+      await AuthService.forgotPasswordRequest(email);
       res.json({ message: 'Correo de restablecimiento enviado' });
     } catch (err) {
       res.status(500).json({ error: err.message });

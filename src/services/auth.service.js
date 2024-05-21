@@ -2,6 +2,9 @@ const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('../utils/jwt');
 
+const { sendEmail } = require('./email.service');
+const { resetPasswordTemplate } = require('../utils/emailTemplate');
+
 class AuthService{
     static async register(userData){
         try{
@@ -38,8 +41,11 @@ class AuthService{
                 throw new Error('Usuario no encontrado');
             }
             console.log(`auth.service ~~ Enviar email con link para recuperar la contraseña a ${user.email}`);
-            //TODO Despues del mail apunta a la ruta de resetPassword
-            return user;
+            //TODO email
+            const token = jwt.generateToken({username: user.username});
+            const resetPasswordLink = `http://localhost:8000/api/v1/auth/reset-password/${token}`;
+            const emailContent  = resetPasswordTemplate(user.username, resetPasswordLink);
+            await sendEmail(user.email, 'Restablecer contraseña', '', emailContent);
         }catch(err){
             console.error('auth.service ~~ Error al recuperar la contraseña:', err);
             throw err;

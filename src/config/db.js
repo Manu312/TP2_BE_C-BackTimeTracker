@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 const user = 'root'|| process.env.DB_USER;
-const password = 'root'|| process.env.DB_PASSWORD;
+const password = ''|| process.env.DB_PASSWORD;
 
 const sequelize = new Sequelize('apptimetracker', `${user}`, `${password}`, {
   host: 'localhost',
