@@ -25,7 +25,8 @@ class ProjectController {
         console.log(userId);
         if(!userId) return res.status(400).json({ error: 'Usuario no encontrado' });
         const projects = await ProjectService.getAllProjectsByUser(userId);
-        res.status(201).json({ message: 'Obtener projectos por usuario exitoso', user:user, projects:projects});
+        console.log("aca");
+        res.status(201).json({ message: 'Obtener projectos por usuario exitoso', user:userId, projects:projects});
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

@@ -13,10 +13,14 @@ class ProjectService {
     }
     static async getAllProjectsByUser(userId){
         try{
-            const user = User.findByPk(userId);
+            const user = await User.findByPk(userId,{
+                include: {
+                    model:Project,
+                    as: 'projects'}
+            });
             if(!user) throw new Error('Usuario no encontrado');
-            const projects = await user.getProjects();
-            return projects;
+            console.log(user.projects);
+            return user.projects;
         }catch(err){
             console.error('project.service ~~ Error al obtener los projectos del usuario:', err);
             throw err;
