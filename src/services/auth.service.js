@@ -18,7 +18,6 @@ class AuthService{
     }
     static async login(username, password){
         try{
-            console.log('auth.service ~~ username:',username,'password:',password)
             const user = await User.findOne({where: {username: username}});
             if(!user){
                 throw new Error('Usuario no encontrado');

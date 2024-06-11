@@ -11,7 +11,11 @@ const defineAssociations = require('./config/associations');
 // Middleware para parsear JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:8081', // Reemplaza con el puerto donde corre el front-end
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
 
 defineAssociations();
 
