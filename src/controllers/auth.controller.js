@@ -1,25 +1,32 @@
-const AuthService = require('../services/auth.service');
+const AuthService = require("../services/auth.service");
 
 class AuthController {
   static async register(req, res) {
     try {
-        const user = await AuthService.register(req.body);
-        res.status(201).json({ message: 'Usuario registrado con éxito', user });
+      const { token, user } = await AuthService.register(req.body);
+      res.status(201).json({
+        message: "Usuario registrado con éxito",
+        user: user,
+        token: token,
+      });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
   }
 
   static async login(req, res) {
     try {
-        const { username, password } = req.body;
-        console.log("username: %s password: %s", username,password);
-        const { token, user } = await AuthService.login(username, password);
-        res.header('Authorization', `Bearer ${token}`);
-        res.json({ message: 'Inicio de sesión exitoso', user:user, token:token});
-
+      const { username, password } = req.body;
+      console.log("username: %s password: %s", username, password);
+      const { token, user } = await AuthService.login(username, password);
+      res.status(200).json({
+        message: "Inicio de sesión exitoso",
+        user: user,
+        token: token,
+      });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+      console.log(err.message, "mensaje en el controller");
+      res.status(500).json({ error: err.message });
     }
   }
 
@@ -27,7 +34,7 @@ class AuthController {
     try {
       const { email } = req.body;
       await AuthService.forgotPasswordRequest(email);
-      res.json({ message: 'Correo de restablecimiento enviado' });
+      res.json({ message: "Correo de restablecimiento enviado" });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -37,7 +44,7 @@ class AuthController {
     try {
       const { token, newPassword } = req.body;
       await AuthService.resetPassword(token, newPassword);
-      res.json({ message: 'Contraseña restablecida con éxito' });
+      res.json({ message: "Contraseña restablecida con éxito" });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
