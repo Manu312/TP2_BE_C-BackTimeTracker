@@ -5,6 +5,7 @@ const { searchUserWithToken } = require("../utils/common");
 class ProjectController {
   static async createProject(req, res) {
     try {
+      //@TODO AUGUSTO: HECHO. MIDDLEWARE!
       const token = req.headers.authorization.split(" ")[1];
 
       const findUserById = await searchUserWithToken(token);
@@ -28,7 +29,8 @@ class ProjectController {
 
   static async getAllProjectsByUser(req, res) {
     try {
-      //@TODO AUGUSTO: HECHO
+      //@TODO AUGUSTO: HECHO. MIDDLEWARE!
+
       const token = req.headers.authorization.split(" ")[1];
 
       const findUserById = await searchUserWithToken(token);

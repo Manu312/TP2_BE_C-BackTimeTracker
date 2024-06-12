@@ -25,7 +25,7 @@ VALUES ('admin', 'admin123', 'admin@example.com', 'admin', 'Admin User');
 INSERT INTO users (username, password, email, role, full_name)
 VALUES ('user', 'user123', 'user@example.com', 'user', 'Normal User');
 
---Creat tabla "peoyectos"
+--Creat tabla "proyectos"
 
 CREATE TABLE projects (
 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,4 +36,15 @@ userId INT,
 CONSTRAINT fk_projects_users
 FOREIGN KEY (userId)
 REFERENCES users(id)
+);
+
+--Crear tabla "Jornadas"
+CREATE TABLE jornadas (
+id INT AUTO_INCREMENT PRIMARY KEY,
+fechaInicio DATETIME NOT NULL,
+fechaCierre DATETIME NOT NULL,
+hoursWorked DOUBLE NOT NULL,
+price DOUBLE NOT NULL,
+projectId INT,
+FOREIGN KEY (projectId) REFERENCES projects(id)
 );

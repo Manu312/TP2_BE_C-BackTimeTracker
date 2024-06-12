@@ -24,6 +24,7 @@ defineAssociations();
 
 const authRouter = require("./routes/auth.route");
 const projectRouter = require("./routes/project.routes");
+const jornadaRouter = require("./routes/jornada.routes");
 
 app.get("/test", (req, res) => {
   console.log("test ok");
@@ -31,7 +32,7 @@ app.get("/test", (req, res) => {
 });
 app.use(`${PREFIX}/auth`, authRouter);
 app.use(`${PREFIX}/project`, projectRouter);
-
+app.use(`${PREFIX}/jornada`, jornadaRouter);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
