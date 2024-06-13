@@ -27,9 +27,9 @@ Ejecuta el siguiente comando para instalar todas las dependencias necesarias:
 npm install bcrypt cors dotenv express jsonwebtoken mysql mysql2 nodemailer sequelize
 ```
 
-## Configuración del Entorno
+## Configuración de la Base de Datos
 
-Antes de comenzar, asegúrate de leer el archivo de DBCONFIG.MD para la bd y las tablas
+Antes de comenzar, asegúrate de leer el archivo de 'DBCONFIG.MD' para la bd y las tablas
 
 ## Ejecutando la Aplicacion
 
