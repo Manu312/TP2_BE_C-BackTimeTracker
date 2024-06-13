@@ -24,7 +24,7 @@ Antes de comenzar, asegúrate de validar el archivo `.example.env`. Cámbiale el
 Ejecuta el siguiente comando para instalar todas las dependencias necesarias:
 
 ```sh
-npm install bcrypt cors dotenv express jsonwebtoken mysql mysql2 nodemailer sequelize
+npm install bcrypt cors dotenv express jsonwebtoken mysql2 nodemailer sequelize
 ```
 
 ## Configuración de la Base de Datos
