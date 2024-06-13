@@ -1,4 +1,4 @@
-Comandos mySql dbPRD:
+# Comandos mySql dbPRD:
 
 CREATE DATABASE apptimetracker;
 
