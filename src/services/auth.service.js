@@ -95,7 +95,6 @@ class AuthService {
       throw err;
     }
   }
-
   static findUserById = async (id) => {
     try {
       const user = await User.findByPk(id);

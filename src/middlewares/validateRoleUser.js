@@ -3,7 +3,7 @@ const JwtUtils = require("../utils/jwt");
 const validateRoleUser =  (requiredRole) => {
     return (req, res, next) => {
         try {
-            const token = req.headers['authorization'];
+            const token = req.headers['Authorization'];
             if (!token) {
                 return res.status(403).json({ error: 'No token provided' });
             }
