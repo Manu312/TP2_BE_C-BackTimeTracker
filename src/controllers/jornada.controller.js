@@ -1,11 +1,18 @@
 const JornadaService = require("../services/jornada.service");
 const { searchUserWithToken } = require("../utils/common");
+const {verifyToken} = require("../utils/jwt");
 
 class JornadaController {
   static async createJornada(req, res) {
     try {
       //@TODO AUGUSTO: FALTA VALIDAR EL TOKEN. MIDDLEWARE!
 
+      const token = req.headers.authorization.split(" ")[1];
+      const findUserById = await searchUserWithToken(token);
+      if (!findUserById) {
+        return res.status(400).json({ error: "Usuario no encontrado" });
+      }
+      //Esto seria una manera no? Sino le podemos poner un middleware en la ruta con la funcion "validateUserautenticated"
       const jornadaData = {
         fechaInicio: req.body.fechaInicio,
         fechaCierre: req.body.fechaCierre,
@@ -49,6 +56,16 @@ class JornadaController {
       });
     } catch (err) {
       res.status(500).json({ error: err.message });
+    }
+  }
+  static async deleteJornada(req, res) {
+    try{
+        const jornadaId = parseInt(req.params.jornadaId);
+        const jornada = await JornadaService.deleteJornada(jornadaId);
+        if(!jornada) return res.status(400).json({error: "Jornada no encontrada"});
+        res.status(200).json({message: "Jornada eliminada con éxito", jornada});
+    }catch(err){
+        res.status(500).json({ error: err.message });
     }
   }
 }

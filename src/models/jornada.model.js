@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-//Falta agregar el Porject
 const Project = require('./project.model');
 
 const Jornada = sequelize.define('Jornada', {

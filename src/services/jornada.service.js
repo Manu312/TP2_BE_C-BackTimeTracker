@@ -27,6 +27,16 @@ class JornadaService {
       throw err;
     }
   }
+  static async deleteJornada(jornadaId) {
+    try {
+      const jornada = await Jornada.findByPk(jornadaId);
+      if (!jornada) return null;
+      return await jornada.destroy();
+    } catch (err) {
+      console.error("jornada.service ~~ Error al eliminar la jornada:", err);
+      throw err;
+    }
+  }
 }
 
 module.exports = JornadaService;
