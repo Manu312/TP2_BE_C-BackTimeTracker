@@ -29,7 +29,7 @@ VALUES ('user', 'user123', 'user@example.com', 'user', 'Normal User');
 
 CREATE TABLE projects (
 id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(255) NOT NULL UNIQUE,
+name VARCHAR(255) NOT NULL,
 pricePerHour INT NOT NULL,
 description VARCHAR(255),
 userId INT,

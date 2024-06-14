@@ -1,6 +1,6 @@
 const JornadaService = require("../services/jornada.service");
 const { searchUserWithToken } = require("../utils/common");
-const {verifyToken} = require("../utils/jwt");
+const { verifyToken } = require("../utils/jwt");
 
 class JornadaController {
   static async createJornada(req, res) {
@@ -23,13 +23,10 @@ class JornadaController {
       const jornada = await JornadaService.createJornada(jornadaData);
       if (!jornada)
         return res.status(400).json({ error: "No se pudo crear la jornada" });
-      res
-        .status(201)
-        .json({
-          message: "Jornada creada con éxito",
-          jornada,
-          username: "augusto",
-        });
+      res.status(201).json({
+        message: "Jornada creada con éxito",
+        jornada,
+      });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -59,13 +56,14 @@ class JornadaController {
     }
   }
   static async deleteJornada(req, res) {
-    try{
-        const jornadaId = parseInt(req.params.jornadaId);
-        const jornada = await JornadaService.deleteJornada(jornadaId);
-        if(!jornada) return res.status(400).json({error: "Jornada no encontrada"});
-        res.status(200).json({message: "Jornada eliminada con éxito", jornada});
-    }catch(err){
-        res.status(500).json({ error: err.message });
+    try {
+      const jornadaId = parseInt(req.params.jornadaId);
+      const jornada = await JornadaService.deleteJornada(jornadaId);
+      if (!jornada)
+        return res.status(400).json({ error: "Jornada no encontrada" });
+      res.status(200).json({ message: "Jornada eliminada con éxito", jornada });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
     }
   }
 }
