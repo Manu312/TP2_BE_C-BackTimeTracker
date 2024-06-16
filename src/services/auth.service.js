@@ -9,10 +9,13 @@ const sequelize = require("../config/db");
 class AuthService {
   static async register(userData) {
     const transaction = await sequelize.transaction();
-
     try {
       const hashedPassword = await bcrypt.hash(userData.password, 10);
       const user = { ...userData, password: hashedPassword, role: "user" };
+      //Validacion para que no se repitan los usuarios.
+      const existCurrentEmail = await User.findOne({ where: { email: user.email } });
+      if(existCurrentEmail) return null;
+
       const user_created = await User.create({ ...user }, { transaction });
       const jwtToken = jwt.generateToken({
         id: user_created.id,
@@ -107,6 +110,23 @@ class AuthService {
       throw err;
     }
   };
+  static async refreshToken(token) {
+    try{
+      const decodedToken = jwt.verifyToken(token);
+      if(!decodedToken) throw new Error("Token inválido");
+      const user = await User.findByPk(decodedToken.id);
+      if(!user) throw new Error("Usuario no encontrado");
+      const newToken = jwt.generateToken({
+        id: user.id,
+        username: user.username,
+        role: user.role,
+      });
+      return newToken;
+    }catch(error){
+      console.error("auth.service ~~ Error al refrescar el token:", error);
+      throw error;
+    }
+  }
 }
 
 module.exports = AuthService;
