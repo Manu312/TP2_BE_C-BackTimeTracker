@@ -19,7 +19,6 @@ class AuthController {
   static async login(req, res) {
     try {
       const { username, password } = req.body;
-
       const { token, user } = await AuthService.login(username, password);
       res.status(200).set("Authorization", `Bearer ${token}`).json({
         message: "Inicio de sesión exitoso",
@@ -42,15 +41,6 @@ class AuthController {
     }
   }
 
-  static async resetPassword(req, res) {
-    try {
-      const { token, newPassword } = req.body;
-      await AuthService.resetPassword(token, newPassword);
-      res.json({ message: "Contraseña restablecida con éxito" });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  }
   static async logout(req, res) {
     try {
       const token = req.headers.Authorization.split(" ")[1];
@@ -63,6 +53,17 @@ class AuthController {
       res.status(500).json({ error: err.message });
     }
   }
+
+  static async resetPassword(req, res) {
+    try {
+      const { token, newPassword } = req.body;
+      await AuthService.resetPassword(token, newPassword);
+      res.json({ message: "Contraseña restablecida con éxito" });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+
   static async refreshToken(req, res) {
     try {
       const token = req.headers.Authorization.split(" ")[1];
