@@ -7,7 +7,6 @@ const port = process.env.PORT || 8000;
 const PREFIX = "/api/v1";
 const sequelize = require("./config/db");
 const defineAssociations = require("./config/associations");
-
 // Middleware para parsear JSON
 app.use(express.json());
 

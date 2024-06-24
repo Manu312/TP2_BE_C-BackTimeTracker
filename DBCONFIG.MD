@@ -46,5 +46,6 @@ fechaCierre DATETIME NOT NULL,
 hoursWorked DOUBLE NOT NULL,
 price DOUBLE NOT NULL,
 projectId INT,
+CONSTRAINT fk_jornada_projects
 FOREIGN KEY (projectId) REFERENCES projects(id)
 );
