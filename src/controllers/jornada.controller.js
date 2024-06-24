@@ -1,14 +1,13 @@
 const JornadaService = require("../services/jornada.service");
-const { searchUserWithToken } = require("../utils/common");
+const { searchUserById } = require("../utils/common");
 const { verifyToken } = require("../utils/jwt");
 
 class JornadaController {
   static async createJornada(req, res) {
     try {
-      //@TODO AUGUSTO: FALTA VALIDAR EL TOKEN. MIDDLEWARE!
+      const idUser = req.user.id;
 
-      const token = req.headers.authorization.split(" ")[1];
-      const findUserById = await searchUserWithToken(token);
+      const findUserById = await searchUserById(idUser);
       if (!findUserById) {
         return res.status(400).json({ error: "Usuario no encontrado" });
       }
@@ -34,12 +33,10 @@ class JornadaController {
 
   static async getAllJornadasByProject(req, res) {
     try {
-      //@TODO AUGUSTO: HECHO. MIDDLEWARE!
-      const token = req.headers.authorization.split(" ")[1];
       const project = Number(req.params.idProject);
+      const idUser = req.user.id;
 
-      console.log("PROJECT", project);
-      const findUserById = await searchUserWithToken(token);
+      const findUserById = await searchUserById(idUser);
 
       if (!findUserById) {
         return res.status(400).json({ error: "Usuario no encontrado" });

@@ -1,14 +1,14 @@
 const AuthService = require("../services/auth.service");
 const ProjectService = require("../services/project.service");
-const { searchUserWithToken } = require("../utils/common");
+const { searchUserById } = require("../utils/common");
 
 class ProjectController {
   static async createProject(req, res) {
     try {
-      //@TODO AUGUSTO: HECHO. MIDDLEWARE!
-      const token = req.headers.authorization.split(" ")[1];
+      const idUser = req.user.id;
 
-      const findUserById = await searchUserWithToken(token);
+      const findUserById = await searchUserById(idUser);
+
       const projectData = {
         name: req.body.project_name,
         description: req.body.description ?? "",
@@ -29,11 +29,9 @@ class ProjectController {
 
   static async getAllProjectsByUser(req, res) {
     try {
-      //@TODO AUGUSTO: HECHO. MIDDLEWARE!
+      const idUser = req.user.id;
 
-      const token = req.headers.authorization.split(" ")[1];
-
-      const findUserById = await searchUserWithToken(token);
+      const findUserById = await searchUserById(idUser);
 
       if (!findUserById) {
         return res.status(400).json({ error: "Usuario no encontrado" });
