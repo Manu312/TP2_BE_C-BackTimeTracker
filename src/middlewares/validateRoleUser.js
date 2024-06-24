@@ -3,17 +3,7 @@ const JwtUtils = require("../utils/jwt");
 const validateRoleUser =  (requiredRole) => {
     return (req, res, next) => {
         try {
-            const token = req.headers['Authorization'];
-            if (!token) {
-                return res.status(403).json({ error: 'No token provided' });
-            }
-
-            const decodedToken = JwtUtils.verifyToken(token);
-            if (!decodedToken) {
-                return res.status(403).json({ error: 'Failed to authenticate token' });
-            }
-
-            if (decodedToken.role !== requiredRole) {
+            if (req.user.role !== requiredRole) {
                 return res.status(403).json({ error: 'Insufficient role' });
             }
             next();

@@ -8,9 +8,10 @@ router.use(validateUserAutenticated());
 
 router.post("/create", JornadaController.createJornada);
 router.get("/:idProject/jornadas", JornadaController.getAllJornadasByProject);
+router.get("/:idProject/jornadas/:idJornada", JornadaController.getJornadaById);
 router.delete(
   "/:idProject/jornadas/:idJornada",
-  validateRoleUSer(["user"]),
+  validateRoleUSer("admin"),
   JornadaController.deleteJornada
 );
 

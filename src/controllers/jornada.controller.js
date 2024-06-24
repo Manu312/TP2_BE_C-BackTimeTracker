@@ -34,7 +34,17 @@ class JornadaController {
       res.status(500).json({ error: err.message });
     }
   }
-  static async getJornadasById(req, res) {
+  static async getJornadaById(req, res) {
+    try {
+      const jornadaId = parseInt(req.params.idJornada);
+      const projectId = parseInt(req.params.idProject);
+      const jornada = await JornadaService.getJornadaById(projectId,jornadaId);
+      if (!jornada)
+        return res.status(400).json({ error: "Jornada no encontrada" });
+      res.status(200).json({ message: "Obtener jornada por id exitoso", jornada });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   }
   static async getAllJornadasByProject(req, res) {
     try {
@@ -59,8 +69,10 @@ class JornadaController {
   }
   static async deleteJornada(req, res) {
     try {
-      const jornadaId = parseInt(req.params.jornadaId);
-      const jornada = await JornadaService.deleteJornada(jornadaId);
+      const jornadaId = parseInt(req.params.idJornada);
+      const projectId = parseInt(req.params.idProject);
+      console.log(jornadaId,projectId);
+      const jornada = await JornadaService.deleteJornada(projectId,jornadaId);
       if (!jornada)
         return res.status(400).json({ error: "Jornada no encontrada" });
       res.status(200).json({ message: "Jornada eliminada con éxito", jornada });

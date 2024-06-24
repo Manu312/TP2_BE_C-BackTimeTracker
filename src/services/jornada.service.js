@@ -10,6 +10,22 @@ class JornadaService {
       throw err;
     }
   }
+  static async getJornadaById(projectId,jornadaId) {
+    try {
+      console.log(jornadaId,projectId);
+      const jornada = await Jornada.findOne({
+        where: {
+          projectId: projectId,
+          id: jornadaId,
+        },
+      });
+      if (!jornada) throw new Error("Jornada no encontrada");
+      return jornada;
+    } catch (err) {
+      console.error("jornada.service ~~ Error al obtener la jornada por id:", err);
+      throw err;
+    }
+  }
   static async getAllJornadasByProject(project) {
     try {
       const jornadas = await Jornada.findAll({
@@ -27,9 +43,14 @@ class JornadaService {
       throw err;
     }
   }
-  static async deleteJornada(jornadaId) {
+  static async deleteJornada(projectId,jornadaId) {
     try {
-      const jornada = await Jornada.findByPk(jornadaId);
+      const jornada = await Jornada.findOne({
+        where: {
+          projectId: projectId,
+          id: jornadaId,
+        },
+      });
       if (!jornada) return null;
       return await jornada.destroy();
     } catch (err) {
