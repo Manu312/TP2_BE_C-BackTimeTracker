@@ -65,11 +65,8 @@ class ProjectController {
   static async updateProject(req, res) {
     try {
       const projectId = req.params.id;
-      const projectData = {
-        name: req.body.name,
-        pricePerHour: req.body.pricePerHour,
-        description: req.body.description,
-      };
+      const projectData = req.body;
+
       if (!projectId)
         return res.status(400).json({ error: "Id de project no encontrado" });
       if (!projectData)
