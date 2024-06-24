@@ -6,21 +6,17 @@ class ProjectController {
   static async createProject(req, res) {
     try {
       const idUser = req.user.id;
-
       const findUserById = await searchUserById(idUser);
-
       const projectData = {
         name: req.body.project_name,
         description: req.body.description ?? "",
         pricePerHour: parseInt(req.body.price_per_hour),
         userId: findUserById.id,
       };
-
       const project = await ProjectService.createProject(projectData);
       if (!project) {
         return res.status(400).json({ error: "No se pudo crear el projecto" });
       }
-
       res.status(201).json({ message: "Project creado con éxito", project });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -30,14 +26,11 @@ class ProjectController {
   static async getAllProjectsByUser(req, res) {
     try {
       const idUser = req.user.id;
-
       const findUserById = await searchUserById(idUser);
-
       if (!findUserById) {
         return res.status(400).json({ error: "Usuario no encontrado" });
       }
       const projects = await ProjectService.getAllProjectsByUser(findUserById);
-
       res.status(201).json({
         message: "Obtener projectos por usuario exitoso",
         username: findUserById.username,
@@ -66,7 +59,6 @@ class ProjectController {
     try {
       const projectId = req.params.id;
       const projectData = req.body;
-
       if (!projectId)
         return res.status(400).json({ error: "Id de project no encontrado" });
       if (!projectData)
