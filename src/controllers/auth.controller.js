@@ -6,7 +6,7 @@ class AuthController {
       const { token, user } = await AuthService.register(req.body);
       if (!user || !token)
         return res.status(500).json({ error: "Error al registrar el usuario" });
-      res.status(201).set("Authorization", `Bearer ${token}`).json({
+      res.status(201).json({
         message: "Usuario registrado con éxito",
         user: user,
         token: token,

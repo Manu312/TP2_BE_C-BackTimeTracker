@@ -11,7 +11,6 @@ router.get("/:idProject/jornadas", JornadaController.getAllJornadasByProject);
 router.get("/:idProject/jornadas/:idJornada", JornadaController.getJornadaById);
 router.delete(
   "/:idProject/jornadas/:idJornada",
-  validateRoleUSer("admin"),
   JornadaController.deleteJornada
 );
 

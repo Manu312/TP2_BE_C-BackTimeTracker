@@ -11,7 +11,7 @@ class JornadaController {
       if (!findUserById) {
         return res.status(400).json({ error: "Usuario no encontrado" });
       }
-      
+
       //TODO validar en el front
       const jornadaData = {
         fechaInicio: new Date(req.body.fechaInicio),
@@ -21,8 +21,16 @@ class JornadaController {
         projectId: parseInt(req.body.idProject),
       };
       //TODO validar en el front
-      if(jornadaData.fechaInicio.year<Date.now.year || jornadaData.fechaCierre.year<Date.now.year) throw new Error("Fecha invalida");
-      if(jornadaData.fechaInicio.month<Date.now.month || jornadaData.fechaCierre.month<Date.now.month) throw new Error("Fecha invalida");
+      if (
+        jornadaData.fechaInicio.year < Date.now.year ||
+        jornadaData.fechaCierre.year < Date.now.year
+      )
+        throw new Error("Fecha invalida");
+      if (
+        jornadaData.fechaInicio.month < Date.now.month ||
+        jornadaData.fechaCierre.month < Date.now.month
+      )
+        throw new Error("Fecha invalida");
       const jornada = await JornadaService.createJornada(jornadaData);
       if (!jornada)
         return res.status(400).json({ error: "No se pudo crear la jornada" });
@@ -38,10 +46,12 @@ class JornadaController {
     try {
       const jornadaId = parseInt(req.params.idJornada);
       const projectId = parseInt(req.params.idProject);
-      const jornada = await JornadaService.getJornadaById(projectId,jornadaId);
+      const jornada = await JornadaService.getJornadaById(projectId, jornadaId);
       if (!jornada)
         return res.status(400).json({ error: "Jornada no encontrada" });
-      res.status(200).json({ message: "Obtener jornada por id exitoso", jornada });
+      res
+        .status(200)
+        .json({ message: "Obtener jornada por id exitoso", jornada });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -69,12 +79,13 @@ class JornadaController {
   }
   static async deleteJornada(req, res) {
     try {
-      const jornadaId = parseInt(req.params.idJornada);
-      const projectId = parseInt(req.params.idProject);
-      console.log(jornadaId,projectId);
-      const jornada = await JornadaService.deleteJornada(projectId,jornadaId);
+      console.log("entro en delte jornda");
+      const jornadaId = req.params.idJornada;
+      const projectId = req.params.idProject;
+      const jornada = await JornadaService.deleteJornada(projectId, jornadaId);
       if (!jornada)
         return res.status(400).json({ error: "Jornada no encontrada" });
+      console.log(jornada);
       res.status(200).json({ message: "Jornada eliminada con éxito", jornada });
     } catch (err) {
       res.status(500).json({ error: err.message });

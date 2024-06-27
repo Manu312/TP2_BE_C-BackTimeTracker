@@ -7,6 +7,10 @@ const port = process.env.PORT || 8000;
 const PREFIX = "/api/v1";
 const sequelize = require("./config/db");
 const defineAssociations = require("./config/associations");
+const authRouter = require("./routes/auth.route");
+const projectRouter = require("./routes/project.routes");
+const jornadaRouter = require("./routes/jornada.routes");
+
 // Middleware para parsear JSON
 app.use(express.json());
 
@@ -20,10 +24,6 @@ app.use(
 );
 
 defineAssociations();
-
-const authRouter = require("./routes/auth.route");
-const projectRouter = require("./routes/project.routes");
-const jornadaRouter = require("./routes/jornada.routes");
 
 app.get("/test", (req, res) => {
   console.log("test ok");
