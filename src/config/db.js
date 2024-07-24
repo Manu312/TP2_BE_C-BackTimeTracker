@@ -15,7 +15,7 @@ async () => {
         console.log('Database synchronized.');
     }catch(error){
         console.error('Unable to connect to the database:', error);
-        //await sequelize.sync({force: true}); Cuando se quiera forzar la sincronización. Tene en cuenta que se borran los datos viejos.
+        //await sequelize.sync({force: false}); Cuando se quiera forzar la sincronización. Tene en cuenta que se borran los datos viejos.
     }
 }
 
